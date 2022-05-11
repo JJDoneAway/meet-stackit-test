@@ -1,10 +1,9 @@
-package de.hoehne.stackit.test;
+package de.hoehne.stackit.test.randoms;
 
 import java.net.URI;
 import java.util.Random;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -12,12 +11,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @Component
 @EnableScheduling
-public class RandomDataGenerator {
-	private final Logger log = LoggerFactory.getLogger(RandomDataGenerator.class);
+@Slf4j
+public class RandomGreeter{
 	
 	private Random random = new Random();
 
@@ -25,7 +25,7 @@ public class RandomDataGenerator {
 	private String serviceURL;
 
 	@Scheduled(fixedRate = 1_000, initialDelay = 1_000)
-	void generateRandomData() {
+	void greet() {
 		long waiting = random.nextLong(1000);
 		try {
 			Thread.sleep(waiting);
@@ -33,7 +33,7 @@ public class RandomDataGenerator {
 			e.printStackTrace();
 		}
 
-		URI uri = URI.create("%s/hello?name=Random_User".formatted(serviceURL));
+		URI uri = URI.create("%s/hello?name=%s".formatted(serviceURL, RandomStringUtils.randomAlphabetic(5, 15)));
 		try {
 			WebClient.create().get().uri(uri)
 					.exchangeToMono(response -> {
