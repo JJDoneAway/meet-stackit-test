@@ -24,7 +24,7 @@ public class RandomGreeter{
 	@Value("${meet_stackit.service.name}")
 	private String serviceURL;
 
-	@Scheduled(fixedRate = 1_000, initialDelay = 1_000)
+	@Scheduled(fixedDelay = 1_000, initialDelay = 1_000)
 	void greet() {
 		long waiting = random.nextLong(1000);
 		try {

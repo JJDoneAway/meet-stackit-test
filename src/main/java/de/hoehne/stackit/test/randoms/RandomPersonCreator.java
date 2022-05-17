@@ -26,8 +26,8 @@ public class RandomPersonCreator {
 	@Value("${meet_stackit.service.name}")
 	private String serviceURL;
 
-	@Scheduled(fixedRate = 1_000, initialDelay = 1_000)
-	void greet() {
+	@Scheduled(fixedDelay = 30_000, initialDelay = 1_000)
+	void creatPersonFier() {
 
 		try {
 			ExecutorService pool = Executors.newFixedThreadPool(50);
