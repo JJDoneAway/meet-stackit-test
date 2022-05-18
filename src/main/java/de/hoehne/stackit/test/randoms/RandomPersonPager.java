@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,7 @@ public class RandomPersonPager {
 	private Pattern MY_PATTERN = Pattern.compile("\"size\":\\s*[0-9]+");
 
 	@Scheduled(fixedDelay = 30_000, initialDelay = 1_000)
+	@Async
 	void pagePersons() {
 		log.info("Start to page now.");
 		try {

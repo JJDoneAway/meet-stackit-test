@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,7 @@ public class RandomPersonCreator {
 	private String serviceURL;
 
 	@Scheduled(fixedDelay = 30_000, initialDelay = 1_000)
+	@Async
 	void creatPersonFier() {
 
 		try {

@@ -6,6 +6,7 @@ import java.util.Random;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,7 @@ public class RandomGreeter{
 	@Value("${meet_stackit.service.name}")
 	private String serviceURL;
 
+	@Async
 	@Scheduled(fixedDelay = 1_000, initialDelay = 1_000)
 	void greet() {
 		long waiting = random.nextLong(1000);
