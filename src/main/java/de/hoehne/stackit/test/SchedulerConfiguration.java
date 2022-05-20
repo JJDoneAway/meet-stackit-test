@@ -13,7 +13,7 @@ public class SchedulerConfiguration implements SchedulingConfigurer {
 
     @Bean
     public Executor taskExecutor() {
-        return Executors.newScheduledThreadPool(100);
+        return Executors.newScheduledThreadPool(10);
     }
 
     @Override
