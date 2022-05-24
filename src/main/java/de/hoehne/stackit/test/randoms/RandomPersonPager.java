@@ -24,28 +24,31 @@ public class RandomPersonPager {
 
 	@Value("${meet_stackit.service.name}")
 	private String serviceURL;
-	
+
 	private Pattern MY_PATTERN = Pattern.compile("\"size\":\\s*[0-9]+");
+
+	private int currentPage = 0;
 
 	@Scheduled(fixedDelay = 30_000, initialDelay = 1_000)
 	@Async
 	void pagePersons() {
 		log.info("Start to page now.");
 		try {
-			int page = 0;
 			String result = "";
-			do {
-				log.info("Query page {}", page);
-				result = fire(page);
-				
-				Matcher m = MY_PATTERN.matcher(result);
-				while (m.find()) {
-				    String s = m.group();
-				    log.info(s);
-				}
-				
-				page += 1;
-			} while (result.contains("\"empty\":false"));
+			log.info("Query page {}", currentPage);
+			result = fire(currentPage);
+
+			Matcher m = MY_PATTERN.matcher(result);
+			while (m.find()) {
+				String s = m.group();
+				log.info(s);
+			}
+
+			if (result.contains("\"empty\":false")) {
+				currentPage = currentPage + 1;
+			} else {
+				currentPage = 0;
+			}
 		} catch (Exception e) {
 			log.error("Got System Exception while creating demo persons", e);
 		}
