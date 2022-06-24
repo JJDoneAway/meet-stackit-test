@@ -32,9 +32,9 @@ public class RandomPersonCreator {
 	void creatPersonFier() {
 
 		try {
-			ExecutorService pool = Executors.newFixedThreadPool(50);
+			ExecutorService pool = Executors.newFixedThreadPool(2);
 			List<Callable<String>> callables = new ArrayList<>();
-			for(int i = 0; i < 500; i++) {
+			for(int i = 0; i < 5; i++) {
 				callables.add(new Callable<String>() {
 
 					@Override
